@@ -1,0 +1,26 @@
+services:
+  eureka-server:
+    image: 'eureka-server-app'
+    build: D:/Repositories/micros/eureka-server/.
+    networks:
+      - db-network
+    ports:
+      - 8761:8761
+
+  app:
+    image: 'config-server-app'
+    build: ./
+    container_name: 'eureka-config-server-app'
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://172.24.0.2:8761/eureka
+
+    networks:
+      - db-network
+    ports:
+      - 8762:8762
+
+networks:
+  db-network:
+
+volumes:
+  eureka-server-app:
